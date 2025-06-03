@@ -1,5 +1,5 @@
 
-import { Calendar, Home, Inbox, Search, Settings, BarChart3, Users, FolderOpen } from "lucide-react"
+import { Calendar, Home, Database, Shield, Settings, Plus, List } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -15,46 +15,36 @@ import {
 
 const navigationItems = [
   {
-    title: "Dashboard",
+    title: "Үндсэн хуудас",
     url: "/",
     icon: Home,
   },
   {
-    title: "Projects",
-    url: "#",
-    icon: FolderOpen,
+    title: "Системийн бүртгэл",
+    url: "#systems",
+    icon: Database,
   },
   {
-    title: "Analytics",
-    url: "#",
-    icon: BarChart3,
+    title: "Системийн жагсаалт",
+    url: "#list",
+    icon: List,
   },
   {
-    title: "Team",
-    url: "#",
-    icon: Users,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Messages",
-    url: "#",
-    icon: Inbox,
+    title: "Аюулгүй байдал",
+    url: "#security",
+    icon: Shield,
   },
 ]
 
-const secondaryItems = [
+const toolsItems = [
   {
-    title: "Search",
-    url: "#",
-    icon: Search,
+    title: "Шинэ систем",
+    url: "#new-system",
+    icon: Plus,
   },
   {
-    title: "Settings",
-    url: "#",
+    title: "Тохиргоо",
+    url: "#settings",
     icon: Settings,
   },
 ]
@@ -65,16 +55,16 @@ export function AppSidebar() {
       <SidebarHeader className="p-6">
         <div className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">D</span>
+            <span className="text-white font-bold text-sm">СБ</span>
           </div>
-          <span className="font-semibold text-lg">Dashboard</span>
+          <span className="font-semibold text-lg">Системийн бүртгэл</span>
         </div>
       </SidebarHeader>
       
       <SidebarContent className="px-4">
         <SidebarGroup>
           <SidebarGroupLabel className="text-gray-500 uppercase text-xs font-medium tracking-wider mb-2">
-            Navigation
+            Үндсэн цэс
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -97,11 +87,11 @@ export function AppSidebar() {
         
         <SidebarGroup className="mt-8">
           <SidebarGroupLabel className="text-gray-500 uppercase text-xs font-medium tracking-wider mb-2">
-            Tools
+            Хэрэгслүүд
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {secondaryItems.map((item) => (
+              {toolsItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton 
                     asChild 
@@ -122,11 +112,11 @@ export function AppSidebar() {
       <SidebarFooter className="p-4">
         <div className="flex items-center gap-3 p-2 rounded-lg bg-gray-50">
           <div className="h-8 w-8 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center">
-            <span className="text-white text-sm font-medium">JD</span>
+            <span className="text-white text-sm font-medium">ХА</span>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate">John Doe</p>
-            <p className="text-xs text-gray-500 truncate">john@example.com</p>
+            <p className="text-sm font-medium text-gray-900 truncate">Хэрэглэгч Админ</p>
+            <p className="text-xs text-gray-500 truncate">admin@company.mn</p>
           </div>
         </div>
       </SidebarFooter>

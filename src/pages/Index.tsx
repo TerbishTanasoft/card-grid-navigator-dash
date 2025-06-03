@@ -1,7 +1,7 @@
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
-import { Dashboard } from "@/components/Dashboard"
+import { SystemDashboard } from "@/components/SystemDashboard"
 
 const Index = () => {
   return (
@@ -13,13 +13,13 @@ const Index = () => {
             <SidebarTrigger className="h-8 w-8" />
             <div className="h-6 w-px bg-gray-200" />
             <div className="flex items-center gap-2 text-sm text-gray-600">
-              <span>Dashboard</span>
+              <span>Үндсэн хуудас</span>
               <span>/</span>
-              <span className="text-gray-900 font-medium">Projects</span>
+              <span className="text-gray-900 font-medium">Системийн удирдлага</span>
             </div>
           </div>
           <div className="flex-1 overflow-auto">
-            <Dashboard />
+            <SystemDashboard />
           </div>
         </main>
       </div>
