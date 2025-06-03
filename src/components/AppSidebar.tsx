@@ -12,6 +12,7 @@ import {
   SidebarHeader,
   SidebarFooter,
 } from "@/components/ui/sidebar"
+import { useLocation } from "react-router-dom"
 
 const navigationItems = [
   {
@@ -21,17 +22,17 @@ const navigationItems = [
   },
   {
     title: "Системийн бүртгэл",
-    url: "#systems",
+    url: "/systems",
     icon: Database,
   },
   {
     title: "Системийн жагсаалт",
-    url: "#list",
+    url: "/systems-list",
     icon: List,
   },
   {
     title: "Аюулгүй байдал",
-    url: "#security",
+    url: "/security",
     icon: Shield,
   },
 ]
@@ -39,17 +40,19 @@ const navigationItems = [
 const toolsItems = [
   {
     title: "Шинэ систем",
-    url: "#new-system",
+    url: "/new-system",
     icon: Plus,
   },
   {
     title: "Тохиргоо",
-    url: "#settings",
+    url: "/settings",
     icon: Settings,
   },
 ]
 
 export function AppSidebar() {
+  const location = useLocation()
+
   return (
     <Sidebar className="border-r border-gray-200">
       <SidebarHeader className="p-6">
@@ -72,7 +75,9 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton 
                     asChild 
-                    className="w-full justify-start px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                    className={`w-full justify-start px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors ${
+                      location.pathname === item.url ? 'bg-blue-100 text-blue-700' : ''
+                    }`}
                   >
                     <a href={item.url} className="flex items-center gap-3">
                       <item.icon className="h-4 w-4" />
@@ -95,7 +100,9 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton 
                     asChild 
-                    className="w-full justify-start px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                    className={`w-full justify-start px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors ${
+                      location.pathname === item.url ? 'bg-blue-100 text-blue-700' : ''
+                    }`}
                   >
                     <a href={item.url} className="flex items-center gap-3">
                       <item.icon className="h-4 w-4" />
