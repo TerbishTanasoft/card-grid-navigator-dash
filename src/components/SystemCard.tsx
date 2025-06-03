@@ -3,6 +3,17 @@ import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Star, Calendar, User, Database, Edit, Trash2, Eye } from "lucide-react"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 interface SystemCardProps {
   name: string
@@ -14,6 +25,9 @@ interface SystemCardProps {
   duration: string
   isActive: boolean
   isListView?: boolean
+  onView: () => void
+  onEdit: () => void
+  onDelete: () => void
 }
 
 const typeColors = {
@@ -32,7 +46,10 @@ export function SystemCard({
   developer,
   duration,
   isActive,
-  isListView = false
+  isListView = false,
+  onView,
+  onEdit,
+  onDelete
 }: SystemCardProps) {
   if (isListView) {
     return (
@@ -80,17 +97,35 @@ export function SystemCard({
             </div>
             
             <div className="flex items-center gap-2 ml-4">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={onView}>
                 <Eye className="h-4 w-4 mr-1" />
                 Харах
               </Button>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={onEdit}>
                 <Edit className="h-4 w-4 mr-1" />
                 Засах
               </Button>
-              <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
-                <Trash2 className="h-4 w-4" />
-              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Системийг устгах</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Та "{name}" системийг устгахдаа итгэлтэй байна уу? Энэ үйлдлийг буцаах боломжгүй.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Цуцлах</AlertDialogCancel>
+                    <AlertDialogAction onClick={onDelete} className="bg-red-600 hover:bg-red-700">
+                      Устгах
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </div>
         </CardContent>
@@ -157,17 +192,35 @@ export function SystemCard({
       </CardContent>
 
       <CardFooter className="pt-3 flex gap-2">
-        <Button variant="outline" size="sm" className="flex-1">
+        <Button variant="outline" size="sm" className="flex-1" onClick={onView}>
           <Eye className="h-4 w-4 mr-1" />
           Харах
         </Button>
-        <Button variant="outline" size="sm" className="flex-1">
+        <Button variant="outline" size="sm" className="flex-1" onClick={onEdit}>
           <Edit className="h-4 w-4 mr-1" />
           Засах
         </Button>
-        <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
-          <Trash2 className="h-4 w-4" />
-        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Системийг устгах</AlertDialogTitle>
+              <AlertDialogDescription>
+                Та "{name}" системийг устгахдаа итгэлтэй байна уу? Энэ үйлдлийг буцаах боломжгүй.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Цуцлах</AlertDialogCancel>
+              <AlertDialogAction onClick={onDelete} className="bg-red-600 hover:bg-red-700">
+                Устгах
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </CardFooter>
     </Card>
   )

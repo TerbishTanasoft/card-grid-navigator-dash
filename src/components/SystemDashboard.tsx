@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { LayoutGrid, LayoutList, Search, Plus, Filter, Database } from "lucide-react"
 import { SystemCard } from "./SystemCard"
+import { SystemViewModal } from "./SystemViewModal"
+import { SystemEditModal } from "./SystemEditModal"
+import { SystemCreateModal } from "./SystemCreateModal"
 
 const mockSystemData = [
   {
@@ -66,12 +69,43 @@ const mockSystemData = [
 export function SystemDashboard() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [searchQuery, setSearchQuery] = useState("")
+  const [systems, setSystems] = useState(mockSystemData)
+  
+  // Modal states
+  const [viewModalOpen, setViewModalOpen] = useState(false)
+  const [editModalOpen, setEditModalOpen] = useState(false)
+  const [createModalOpen, setCreateModalOpen] = useState(false)
+  const [selectedSystem, setSelectedSystem] = useState<typeof mockSystemData[0] | null>(null)
 
-  const filteredData = mockSystemData.filter(item =>
+  const filteredData = systems.filter(item =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
     item.type.toLowerCase().includes(searchQuery.toLowerCase())
   )
+
+  const handleView = (system: typeof mockSystemData[0]) => {
+    setSelectedSystem(system)
+    setViewModalOpen(true)
+  }
+
+  const handleEdit = (system: typeof mockSystemData[0]) => {
+    setSelectedSystem(system)
+    setEditModalOpen(true)
+  }
+
+  const handleSave = (updatedSystem: typeof mockSystemData[0]) => {
+    setSystems(prev => prev.map(system => 
+      system.id === updatedSystem.id ? updatedSystem : system
+    ))
+  }
+
+  const handleCreate = (newSystem: typeof mockSystemData[0]) => {
+    setSystems(prev => [...prev, newSystem])
+  }
+
+  const handleDelete = (systemId: number) => {
+    setSystems(prev => prev.filter(system => system.id !== systemId))
+  }
 
   return (
     <div className="p-6 space-y-6">
@@ -81,7 +115,10 @@ export function SystemDashboard() {
           <h1 className="text-2xl font-bold text-gray-900">Системийн удирдлага</h1>
           <p className="text-gray-600">Компанийн бүх IT системүүдийг төвлөрсөн байдлаар удирдах</p>
         </div>
-        <Button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white">
+        <Button 
+          className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white"
+          onClick={() => setCreateModalOpen(true)}
+        >
           <Plus className="h-4 w-4 mr-2" />
           Шинэ систем нэмэх
         </Button>
@@ -144,6 +181,9 @@ export function SystemDashboard() {
             duration={item.duration}
             isActive={item.isActive}
             isListView={viewMode === "list"}
+            onView={() => handleView(item)}
+            onEdit={() => handleEdit(item)}
+            onDelete={() => handleDelete(item.id)}
           />
         ))}
       </div>
@@ -157,6 +197,26 @@ export function SystemDashboard() {
           <p className="text-gray-600">Хайлтын нөхцлөө өөрчилж үзнэ үү эсвэл шинэ систем нэмнэ үү.</p>
         </div>
       )}
+
+      {/* Modal-ууд */}
+      <SystemViewModal
+        isOpen={viewModalOpen}
+        onClose={() => setViewModalOpen(false)}
+        system={selectedSystem}
+      />
+
+      <SystemEditModal
+        isOpen={editModalOpen}
+        onClose={() => setEditModalOpen(false)}
+        system={selectedSystem}
+        onSave={handleSave}
+      />
+
+      <SystemCreateModal
+        isOpen={createModalOpen}
+        onClose={() => setCreateModalOpen(false)}
+        onCreate={handleCreate}
+      />
     </div>
   )
 }
